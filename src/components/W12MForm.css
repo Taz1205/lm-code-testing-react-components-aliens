@@ -1,0 +1,32 @@
+.form_input {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  width: 50%;
+  height: 10%;
+  font-weight: bold;
+}
+.form_text {
+  width: 50%;
+  padding: 10px;
+}
+
+.form_label {
+  display: block;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.submit_button {
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form_data_display {
+  font-weight: bold;
+  font-size: 20px;
+}
