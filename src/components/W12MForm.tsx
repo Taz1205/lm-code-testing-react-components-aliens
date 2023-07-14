@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import W12MHeader from "./W12MHeader";
 import "./W12MForm.css";
+import SpeciesName from "./SpeciesName";
+import PlanetName from "./PlanetName";
+import NumberOfBeings from "./NumberOfBeings";
+import MathTest from "./MathTest";
+import ReasonForSparing from "./ReasonForSparing";
 
 interface FormData {
-  species: string;
-  planet: string;
-  beings: string;
-  answer: string;
-  reason: string;
+  speciesName: string;
+  planetName: string;
+  numberOfBeings: string;
+  mathTest: string;
+  reasonForSparing: string;
 }
 
 const FormDataDisplay: React.FC<{ data: FormData; show: boolean }> = ({
@@ -22,86 +27,58 @@ const FormDataDisplay: React.FC<{ data: FormData; show: boolean }> = ({
   ) : null;
 };
 
-const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
+export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,
 }) => {
-  const [species, setSpecies] = useState("");
-  const [planet, setPlanet] = useState("");
-  const [beings, setBeings] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [reason, setReason] = useState("");
+  const [speciesName, setSpeciesName] = useState<string>("");
+  const [planetName, setPlanetName] = useState<string>("");
+  const [numberOfBeings, setNumberOfBeings] = useState<string>("");
+  const [mathTest, setMathTest] = useState<string>("");
+  const [reasonForSparing, setReasonForSparing] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ species, planet, beings, answer, reason });
-    onSubmit({ species, planet, beings, answer, reason });
+    console.log({
+      speciesName,
+      planetName,
+      numberOfBeings,
+      mathTest,
+      reasonForSparing,
+    });
+    onSubmit({
+      speciesName,
+      planetName,
+      numberOfBeings,
+      mathTest,
+      reasonForSparing,
+    });
   };
 
   return (
     <section className="w12MForm">
       <W12MHeader />
-      <div>
+      <div className="form_wrapper">
         <form onSubmit={handleSubmit}>
-          <div className="form_input">
-            <label className="form_label">
-              Species Name:
-              <input
-                className="form_text"
-                type="text"
-                value={species}
-                onChange={(e) => setSpecies(e.target.value)}
-              />
-            </label>
-          </div>
-
-          <div className="form_input">
-            <label className="form_label">
-              Planet Name:
-              <input
-                className="form_text"
-                type="text"
-                value={planet}
-                onChange={(e) => setPlanet(e.target.value)}
-              />
-            </label>
-          </div>
-
-          <div className="form_input">
-            <label className="form_label">
-              Number of beings:
-              <input
-                className="form_text"
-                type="text"
-                value={beings}
-                onChange={(e) => setBeings(e.target.value)}
-              />
-            </label>
-          </div>
-
-          <div className="form_input">
-            <label className="form_label">
-              What is 2 + 2:
-              <select
-                className="form_text"
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-              >
-                <option value="4">4</option>
-                <option value="Not 4">Not 4</option>
-              </select>
-            </label>
-          </div>
-
-          <div className="form_input">
-            <label className="form_label">
-              Reason for sparing:
-              <textarea
-                className="form_text"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              />
-            </label>
-          </div>
+          <SpeciesName
+            value={speciesName}
+            onChange={(e: any) => setSpeciesName(e.target.value)}
+          />
+          <PlanetName
+            value={planetName}
+            onChange={(e: any) => setPlanetName(e.target.value)}
+          />
+          <NumberOfBeings
+            value={numberOfBeings}
+            onChange={(e: any) => setNumberOfBeings(e.target.value)}
+          />
+          <MathTest
+            value={mathTest}
+            onChange={(e: any) => setMathTest(e.target.value)}
+          />
+          <ReasonForSparing
+            value={reasonForSparing}
+            onChange={(e: any) => setReasonForSparing(e.target.value)}
+          />
 
           <input className="submit_button" type="submit" value="Submit" />
         </form>
@@ -112,11 +89,11 @@ const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
 
 const W12MFormContainer: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    species: "",
-    planet: "",
-    beings: "",
-    answer: "",
-    reason: "",
+    speciesName: "",
+    planetName: "",
+    numberOfBeings: "",
+    mathTest: "",
+    reasonForSparing: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
