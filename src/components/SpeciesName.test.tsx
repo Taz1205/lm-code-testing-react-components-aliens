@@ -25,3 +25,10 @@ test("renders SpeciesName component and checks onChange", async () => {
 
   expect(input).toHaveValue("Humans");
 });
+
+test("renders SpeciesName component with correct value sent via props", () => {
+  render(<SpeciesName value="Homo Sapiens" onChange={() => {}} />);
+
+  const input = screen.getByRole("textbox");
+  expect(input).toHaveValue("Homo Sapiens");
+});

@@ -1,6 +1,6 @@
 import React from "react";
 
-interface NumberOfBeingsProps {
+export interface NumberOfBeingsProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

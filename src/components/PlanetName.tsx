@@ -1,6 +1,6 @@
 import React from "react";
 
-interface PlanetNameProps {
+export interface PlanetNameProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

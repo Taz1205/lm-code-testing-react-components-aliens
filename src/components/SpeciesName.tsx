@@ -1,6 +1,6 @@
 import React from "react";
 
-interface SpeciesNameProps {
+export interface SpeciesNameProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

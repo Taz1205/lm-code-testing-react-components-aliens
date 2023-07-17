@@ -44,3 +44,15 @@ test("renders MathTest component and checks onChange with 'Not 4'", () => {
 
   expect(select).toHaveValue(newValue);
 });
+test("renders MathTest component with correct value sent via props with '4'", () => {
+  render(<MathTest value="4" onChange={() => {}} />);
+
+  const input = screen.getByRole("combobox");
+  expect(input).toHaveValue("4");
+});
+test("renders MathTest component with correct value sent via props with 'Not 4'", () => {
+  render(<MathTest value="Not 4" onChange={() => {}} />);
+
+  const input = screen.getByRole("combobox");
+  expect(input).toHaveValue("Not 4");
+});

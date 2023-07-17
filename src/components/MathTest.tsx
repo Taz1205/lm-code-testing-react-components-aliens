@@ -1,6 +1,6 @@
 import React from "react";
 
-interface MathTestProps {
+export interface MathTestProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

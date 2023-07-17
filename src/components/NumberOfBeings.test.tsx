@@ -27,3 +27,9 @@ test("renders NumberOfBeings component and checks onChange", async () => {
 
   expect(input).toHaveValue("9 billion");
 });
+test("renders NumberOfBeings component with correct value sent via props", () => {
+  render(<NumberOfBeings value="1000000" onChange={() => {}} />);
+
+  const input = screen.getByRole("textbox");
+  expect(input).toHaveValue("1000000");
+});

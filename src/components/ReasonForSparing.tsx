@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ReasonForSparingProps {
+export interface ReasonForSparingProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }

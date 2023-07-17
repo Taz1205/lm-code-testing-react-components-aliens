@@ -27,3 +27,9 @@ test("renders ReasonForSparing component and checks onChange", async () => {
 
   expect(input).toHaveValue("We can help each other");
 });
+test("renders ReasonForSparing component with correct value sent via props", () => {
+  render(<ReasonForSparing value="I don't want to die!" onChange={() => {}} />);
+
+  const input = screen.getByRole("textbox");
+  expect(input).toHaveValue("I don't want to die!");
+});

@@ -25,3 +25,9 @@ test("renders PlanetName component and checks onChange", async () => {
 
   expect(input).toHaveValue("Earth");
 });
+test("renders PlanetName component with correct value sent via props", () => {
+  render(<PlanetName value="MyHome" onChange={() => {}} />);
+
+  const input = screen.getByRole("textbox");
+  expect(input).toHaveValue("MyHome");
+});

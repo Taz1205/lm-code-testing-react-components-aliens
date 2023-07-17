@@ -30,11 +30,12 @@ const FormDataDisplay: React.FC<{ data: FormData; show: boolean }> = ({
 export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,
 }) => {
-  const [speciesName, setSpeciesName] = useState<string>("");
-  const [planetName, setPlanetName] = useState<string>("");
-  const [numberOfBeings, setNumberOfBeings] = useState<string>("");
-  const [mathTest, setMathTest] = useState<string>("");
-  const [reasonForSparing, setReasonForSparing] = useState<string>("");
+  const [speciesName, setSpeciesName] = useState<string>("Humans");
+  const [planetName, setPlanetName] = useState<string>("Earth");
+  const [numberOfBeings, setNumberOfBeings] = useState<string>("8 billion");
+  const [mathTest, setMathTest] = useState<string>("4");
+  const [reasonForSparing, setReasonForSparing] =
+    useState<string>("Peaceful Species");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
