@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import "../App.css";
 
 export interface ReasonForSparingProps {
   value: string;
@@ -8,20 +9,30 @@ export interface ReasonForSparingProps {
 const ReasonForSparing: React.FC<ReasonForSparingProps> = ({
   value,
   onChange,
-}) => (
-  <>
+}) => {
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+
+  const validate = (value: string) => {
+    if (value.length < 17 || value.length > 153) {
+      return "Must be between 17 and 153 characters";
+    }
+    return undefined;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setErrorMessage(validate(e.target.value));
+    onChange(e);
+  };
+
+  return (
     <div className="form_input">
-      <label htmlFor="reasonForSparing" className="form_label">
+      <label className="form_label" htmlFor="reasonForSparing">
         Reason for sparing:
-        <textarea
-          id="reasonForSparing"
-          className="form_text"
-          value={value}
-          onChange={onChange}
-        />
+        <textarea id="reasonForSparing" value={value} onChange={handleChange} />
       </label>
+      {errorMessage && <span className="error_message">{errorMessage}</span>}
     </div>
-  </>
-);
+  );
+};
 
 export default ReasonForSparing;
