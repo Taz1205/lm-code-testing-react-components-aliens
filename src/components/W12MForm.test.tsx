@@ -1,6 +1,12 @@
 import { W12MForm } from "./W12MForm";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import {
+  validateSpeciesName,
+  validatePlanetName,
+  validateNumberOfBeings,
+  validateReasonForSparing,
+} from "./validation";
 
 test("renders form element", () => {
   const mockOnSubmit = jest.fn();
@@ -54,4 +60,19 @@ test("calls onSubmit prop when form is submitted", async () => {
     mathTest: "4",
     reasonForSparing: "We can help each other",
   });
+});
+
+test("validateSpeciesName returns true for valid names", () => {
+  expect(validateSpeciesName("Humans")).toBe(true);
+});
+test("validatePlanetName returns true for valid names", () => {
+  expect(validatePlanetName("Earth123")).toBe(true);
+});
+test("validateNumberOfBeings returns true for valid names", () => {
+  expect(validateNumberOfBeings("1000000000")).toBe(true);
+});
+test("validateReasonForSparing returns true for valid names", () => {
+  expect(validateReasonForSparing("We are a peaceful bunch of beings")).toBe(
+    true
+  );
 });

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import W12MHeader from "./W12MHeader";
 import "./W12MForm.css";
-import SpeciesName from "./SpeciesName";
-import PlanetName from "./PlanetName";
-import NumberOfBeings from "./NumberOfBeings";
 import MathTest from "./MathTest";
-import ReasonForSparing from "./ReasonForSparing";
+import {
+  validateSpeciesName,
+  validatePlanetName,
+  validateNumberOfBeings,
+  validateReasonForSparing,
+} from "./validation";
+import TextInput from "./TextInput";
+import TextAreaInput from "./TextAreaInput";
 
 interface FormData {
   speciesName: string;
@@ -123,16 +127,32 @@ export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
       <W12MHeader />
       <div className="form_wrapper">
         <form onSubmit={handleSubmit}>
-          <SpeciesName value={speciesName} onChange={handleSpeciesNameChange} />
-          <PlanetName value={planetName} onChange={handlePlanetNameChange} />
-          <NumberOfBeings
+          <TextInput
+            label="Species Name"
+            value={speciesName}
+            onChange={handleSpeciesNameChange}
+            validate={validateSpeciesName}
+          />
+
+          <TextInput
+            label="Planet Name"
+            value={planetName}
+            onChange={handlePlanetNameChange}
+            validate={validatePlanetName}
+          />
+          <TextInput
+            label="Number Of Beings"
             value={numberOfBeings}
             onChange={handleNumberOfBeingsChange}
+            validate={validateNumberOfBeings}
           />
+
           <MathTest value={mathTest} onChange={handleMathTestChange} />
-          <ReasonForSparing
+          <TextAreaInput
+            label="Reason For Sparing"
             value={reasonForSparing}
             onChange={handleReasonForSparingChange}
+            validate={validateReasonForSparing}
           />
 
           <input
