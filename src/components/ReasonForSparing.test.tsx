@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ReasonForSparing from "./ReasonForSparing";
+import ReasonForSparing, { ReasonForSparingProps } from "./ReasonForSparing";
 import userEvent from "@testing-library/user-event";
 
 test("renders ReasonForSparing component", () => {
@@ -8,28 +8,62 @@ test("renders ReasonForSparing component", () => {
   expect(labelElement).toBeInTheDocument();
 });
 test("renders ReasonForSparing component and checks onChange", async () => {
-  const mockOnChange = jest.fn();
-  const { rerender } = render(
-    <ReasonForSparing value="" onChange={mockOnChange} />
-  );
+  let value = "";
+  const handleChange = jest.fn((event) => {
+    value += event.target.value;
+  });
+
+  render(<ReasonForSparing value={value} onChange={handleChange} />);
 
   const input = screen.getByRole("textbox");
 
   await userEvent.type(input, "We can help each other");
 
-  expect(mockOnChange).toHaveBeenCalledTimes(22);
-
-  const newValue = "We can help each other";
-  mockOnChange.mockImplementation((event) => {
-    rerender(<ReasonForSparing value={newValue} onChange={mockOnChange} />);
-  });
-  fireEvent.change(input, { target: { value: newValue } });
-
-  expect(input).toHaveValue("We can help each other");
+  expect(handleChange).toHaveBeenCalledTimes(22);
+  expect(value).toBe("We can help each other");
 });
+
 test("renders ReasonForSparing component with correct value sent via props", () => {
   render(<ReasonForSparing value="I don't want to die!" onChange={() => {}} />);
 
   const input = screen.getByRole("textbox");
   expect(input).toHaveValue("I don't want to die!");
+});
+
+test("does not display error when valid reason is entered", () => {
+  const validReason: ReasonForSparingProps = {
+    value: "We can help each other in many ways", // A valid reason
+    onChange: () => {},
+  };
+
+  render(<ReasonForSparing {...validReason} />);
+
+  expect(
+    screen.queryByText("Reason must be between 17 and 153 characters")
+  ).not.toBeInTheDocument();
+});
+
+test("displays error when reason is too short", async () => {
+  const handleChange = jest.fn();
+  render(<ReasonForSparing value="" onChange={handleChange} />);
+
+  const input = screen.getByRole("textbox");
+  await userEvent.type(input, "Short reason");
+
+  expect(
+    screen.getByText("Reason must be between 17 and 153 characters")
+  ).toBeInTheDocument();
+});
+
+test("displays error when reason is too long", async () => {
+  const handleChange = jest.fn();
+  render(<ReasonForSparing value="" onChange={handleChange} />);
+
+  const input = screen.getByRole("textbox");
+  const longReason = "a".repeat(154); // A reason that is too long
+  await userEvent.type(input, longReason);
+
+  expect(
+    screen.getByText("Reason must be between 17 and 153 characters")
+  ).toBeInTheDocument();
 });

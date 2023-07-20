@@ -10,11 +10,12 @@ const PlanetName: React.FC<PlanetNameProps> = ({ value, onChange }) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const validate = (value: string) => {
-    if (value.length < 2 || value.length > 49) {
-      return "Must be between 2 and 49 characters";
-    }
-    if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
-      return "Numbers are allowed, but no special characters";
+    if (
+      value.length < 2 ||
+      value.length > 49 ||
+      !/^[a-zA-Z0-9 ]+$/.test(value)
+    ) {
+      return "Planet name must be between 2 and 49 characters,numbers are allowed,but no special characters";
     }
     return undefined;
   };

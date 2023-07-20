@@ -11,7 +11,7 @@ const MathTest: React.FC<MathTestProps> = ({ value, onChange }) => {
 
   const validate = (value: string) => {
     if (value !== "4") {
-      return "Incorrect answer. 2 + 2 equals 4.";
+      return "Incorrect answer,2 + 2 equals 4";
     }
     return undefined;
   };

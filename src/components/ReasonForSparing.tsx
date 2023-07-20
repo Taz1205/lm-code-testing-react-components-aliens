@@ -14,7 +14,7 @@ const ReasonForSparing: React.FC<ReasonForSparingProps> = ({
 
   const validate = (value: string) => {
     if (value.length < 17 || value.length > 153) {
-      return "Must be between 17 and 153 characters";
+      return "Reason must be between 17 and 153 characters";
     }
     return undefined;
   };

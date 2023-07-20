@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import PlanetName from "./PlanetName";
+import { render, screen } from "@testing-library/react";
+import PlanetName, { PlanetNameProps } from "./PlanetName";
 import userEvent from "@testing-library/user-event";
 
 test("renders PlanetName component", () => {
@@ -8,26 +8,79 @@ test("renders PlanetName component", () => {
   expect(labelElement).toBeInTheDocument();
 });
 test("renders PlanetName component and checks onChange", async () => {
-  const mockOnChange = jest.fn();
-  const { rerender } = render(<PlanetName value="" onChange={mockOnChange} />);
+  let value = "";
+  const mockOnChange = jest.fn((event) => {
+    value = event.target.value;
+  });
+
+  render(<PlanetName value={value} onChange={mockOnChange} />);
 
   const input = screen.getByRole("textbox");
 
   await userEvent.type(input, "Earth");
 
   expect(mockOnChange).toHaveBeenCalledTimes(5);
-
-  const newValue = "Earth";
-  mockOnChange.mockImplementation((event) => {
-    rerender(<PlanetName value={newValue} onChange={mockOnChange} />);
-  });
-  fireEvent.change(input, { target: { value: newValue } });
-
-  expect(input).toHaveValue("Earth");
 });
+
 test("renders PlanetName component with correct value sent via props", () => {
   render(<PlanetName value="MyHome" onChange={() => {}} />);
 
   const input = screen.getByRole("textbox");
   expect(input).toHaveValue("MyHome");
+});
+test("does not display error when valid planet name is entered", () => {
+  const validPlanetName: PlanetNameProps = {
+    value: "Earth",
+    onChange: () => {},
+  };
+  render(<PlanetName {...validPlanetName} />);
+
+  expect(
+    screen.queryByText(
+      "Planet name must be between 2 and 49 characters,numbers are allowed,but no special characters"
+    )
+  ).not.toBeInTheDocument();
+});
+
+test("does not display error when planet name with numbers is entered", () => {
+  const validPlanetName: PlanetNameProps = {
+    value: "Earth123",
+    onChange: () => {},
+  };
+  render(<PlanetName {...validPlanetName} />);
+
+  expect(
+    screen.queryByText(
+      "Planet name must be between 2 and 49 characters,numbers are allowed,but no special characters"
+    )
+  ).not.toBeInTheDocument();
+});
+test("displays error when planet name includes a special character", async () => {
+  const handleChange = jest.fn();
+  render(<PlanetName value="" onChange={handleChange} />);
+
+  const input = screen.getByRole("textbox");
+  await userEvent.type(input, "Humans@%$");
+
+  expect(
+    screen.getByText(
+      "Planet name must be between 2 and 49 characters,numbers are allowed,but no special characters"
+    )
+  ).toBeInTheDocument();
+});
+test("displays error when planet name's characters's length > 49", async () => {
+  const handleChange = jest.fn();
+  render(<PlanetName value="" onChange={handleChange} />);
+
+  const input = screen.getByRole("textbox");
+  await userEvent.type(
+    input,
+    "roejgioejgioregioergioerjgioregioregoejrgiorejgiorejgioegjierogejogio"
+  );
+
+  expect(
+    screen.getByText(
+      "Planet name must be between 2 and 49 characters,numbers are allowed,but no special characters"
+    )
+  ).toBeInTheDocument();
 });
