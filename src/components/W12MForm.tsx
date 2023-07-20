@@ -30,12 +30,19 @@ const FormDataDisplay: React.FC<{ data: FormData; show: boolean }> = ({
 export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,
 }) => {
-  const [speciesName, setSpeciesName] = useState<string>("Humans");
-  const [planetName, setPlanetName] = useState<string>("Earth");
-  const [numberOfBeings, setNumberOfBeings] = useState<string>("8 billion");
+  const [speciesName, setSpeciesName] = useState<string>("");
+  const [planetName, setPlanetName] = useState<string>("");
+  const [numberOfBeings, setNumberOfBeings] = useState<string>("");
   const [mathTest, setMathTest] = useState<string>("4");
-  const [reasonForSparing, setReasonForSparing] =
-    useState<string>("Peaceful Species");
+  const [reasonForSparing, setReasonForSparing] = useState<string>("");
+
+  const [isSpeciesNameValid, setIsSpeciesNameValid] = useState<boolean>(false);
+  const [isPlanetNameValid, setIsPlanetNameValid] = useState<boolean>(false);
+  const [isNumberOfBeingsValid, setIsNumberOfBeingsValid] =
+    useState<boolean>(false);
+  const [isMathTestValid, setIsMathTestValid] = useState<boolean>(false);
+  const [isReasonForSparingValid, setIsReasonForSparingValid] =
+    useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,13 +53,69 @@ export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
       mathTest,
       reasonForSparing,
     });
-    onSubmit({
-      speciesName,
-      planetName,
-      numberOfBeings,
-      mathTest,
-      reasonForSparing,
-    });
+    if (
+      isSpeciesNameValid &&
+      isPlanetNameValid &&
+      isNumberOfBeingsValid &&
+      isMathTestValid &&
+      isReasonForSparingValid
+    ) {
+      onSubmit({
+        speciesName,
+        planetName,
+        numberOfBeings,
+        mathTest,
+        reasonForSparing,
+      });
+    }
+  };
+
+  const handleSpeciesNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setIsSpeciesNameValid(
+      value !== "" &&
+        value.length >= 3 &&
+        value.length <= 23 &&
+        /^[a-zA-Z]+$/.test(value)
+    );
+    setSpeciesName(value);
+  };
+
+  const handlePlanetNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setIsPlanetNameValid(
+      value !== "" &&
+        value.length >= 2 &&
+        value.length <= 49 &&
+        /^[a-zA-Z0-9 ]+$/.test(value)
+    );
+    setPlanetName(value);
+  };
+
+  const handleNumberOfBeingsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target;
+    setIsNumberOfBeingsValid(
+      value !== "" && /^\d+$/.test(value) && Number(value) >= 1000000000
+    );
+    setNumberOfBeings(value);
+  };
+
+  const handleMathTestChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setIsMathTestValid(value === "4");
+    setMathTest(value);
+  };
+
+  const handleReasonForSparingChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
+    setIsReasonForSparingValid(
+      value !== "" && value.length >= 17 && value.length <= 153
+    );
+    setReasonForSparing(value);
   };
 
   return (
@@ -60,38 +123,30 @@ export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
       <W12MHeader />
       <div className="form_wrapper">
         <form onSubmit={handleSubmit}>
-          <SpeciesName
-            value={speciesName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSpeciesName(e.target.value)
-            }
-          />
-          <PlanetName
-            value={planetName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPlanetName(e.target.value)
-            }
-          />
+          <SpeciesName value={speciesName} onChange={handleSpeciesNameChange} />
+          <PlanetName value={planetName} onChange={handlePlanetNameChange} />
           <NumberOfBeings
             value={numberOfBeings}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNumberOfBeings(e.target.value)
-            }
+            onChange={handleNumberOfBeingsChange}
           />
-          <MathTest
-            value={mathTest}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setMathTest(e.target.value)
-            }
-          />
+          <MathTest value={mathTest} onChange={handleMathTestChange} />
           <ReasonForSparing
             value={reasonForSparing}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setReasonForSparing(e.target.value)
-            }
+            onChange={handleReasonForSparingChange}
           />
 
-          <input className="submit_button" type="submit" value="Submit" />
+          <input
+            className="submit_button"
+            type="submit"
+            value="Submit"
+            disabled={
+              !isSpeciesNameValid ||
+              !isPlanetNameValid ||
+              !isNumberOfBeingsValid ||
+              !isMathTestValid ||
+              !isReasonForSparingValid
+            }
+          />
         </form>
       </div>
     </section>

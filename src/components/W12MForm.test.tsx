@@ -23,13 +23,25 @@ test("calls onSubmit prop when form is submitted", async () => {
 
   render(<W12MForm onSubmit={mockSubmit} />);
 
-  userEvent.type(screen.getByLabelText(/Species Name/i), "Humans");
-  userEvent.type(screen.getByLabelText(/Planet Name/i), "Earth");
-  userEvent.type(screen.getByLabelText(/Number of beings/i), "8 billion");
-  userEvent.selectOptions(screen.getByLabelText(/What is 2 \+ 2/i), "4");
-  userEvent.type(
-    screen.getByLabelText(/Reason for sparing/i),
-    "Peaceful Species"
+  await userEvent.type(
+    screen.getByRole("textbox", { name: /Species Name/i }),
+    "Humans"
+  );
+  await userEvent.type(
+    screen.getByRole("textbox", { name: /Planet Name/i }),
+    "Earth123"
+  );
+  await userEvent.type(
+    screen.getByRole("textbox", { name: /Number Of Beings/i }),
+    "9000000000"
+  );
+  await userEvent.selectOptions(
+    screen.getByRole("combobox", { name: /What is 2 \+ 2:/i }),
+    ["4"]
+  );
+  await userEvent.type(
+    screen.getByRole("textbox", { name: /Reason For Sparing/i }),
+    "We can help each other"
   );
 
   await userEvent.click(screen.getByRole("button", { name: /Submit/i }));
@@ -37,9 +49,9 @@ test("calls onSubmit prop when form is submitted", async () => {
   expect(mockSubmit).toHaveBeenCalledTimes(1);
   expect(mockSubmit).toHaveBeenCalledWith({
     speciesName: "Humans",
-    planetName: "Earth",
-    numberOfBeings: "8 billion",
+    planetName: "Earth123",
+    numberOfBeings: "9000000000",
     mathTest: "4",
-    reasonForSparing: "Peaceful Species",
+    reasonForSparing: "We can help each other",
   });
 });
