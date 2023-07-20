@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ReasonForSparing, { ReasonForSparingProps } from "./ReasonForSparing";
 import userEvent from "@testing-library/user-event";
 
@@ -60,7 +60,7 @@ test("displays error when reason is too long", async () => {
   render(<ReasonForSparing value="" onChange={handleChange} />);
 
   const input = screen.getByRole("textbox");
-  const longReason = "a".repeat(154); // A reason that is too long
+  const longReason = "a".repeat(154);
   await userEvent.type(input, longReason);
 
   expect(

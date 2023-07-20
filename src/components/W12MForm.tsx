@@ -62,23 +62,33 @@ export const W12MForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
         <form onSubmit={handleSubmit}>
           <SpeciesName
             value={speciesName}
-            onChange={(e: any) => setSpeciesName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSpeciesName(e.target.value)
+            }
           />
           <PlanetName
             value={planetName}
-            onChange={(e: any) => setPlanetName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPlanetName(e.target.value)
+            }
           />
           <NumberOfBeings
             value={numberOfBeings}
-            onChange={(e: any) => setNumberOfBeings(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setNumberOfBeings(e.target.value)
+            }
           />
           <MathTest
             value={mathTest}
-            onChange={(e: any) => setMathTest(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setMathTest(e.target.value)
+            }
           />
           <ReasonForSparing
             value={reasonForSparing}
-            onChange={(e: any) => setReasonForSparing(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setReasonForSparing(e.target.value)
+            }
           />
 
           <input className="submit_button" type="submit" value="Submit" />
